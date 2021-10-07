@@ -18,3 +18,15 @@
 	path = Drivers/BSP/STM32U5xx_Nucleo
 	url = https://github.com/STMicroelectronics/stm32u5xx-nucleo.git
 	branch = main
+[submodule "Middlewares/Third_Party/FreeRTOS"]
+	path = Middlewares/Third_Party/FreeRTOS
+	url = https://github.com/STMicroelectronics/stm32_mw_freertos.git
+	branch = master
+[submodule "Middlewares/ST/STM32_USB_Device_Library"]
+	path = Middlewares/ST/STM32_USB_Device_Library
+	url = https://github.com/STMicroelectronics/stm32_mw_usb_device.git
+	branch = master
+[submodule "Middlewares/ST/STM32_USB_Host_Library"]
+	path = Middlewares/ST/STM32_USB_Host_Library
+	url = https://github.com/STMicroelectronics/stm32_mw_usb_host.git
+	branch = master
