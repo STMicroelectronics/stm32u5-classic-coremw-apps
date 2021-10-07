@@ -6,3 +6,15 @@
 	path = Drivers/STM32U5xx_HAL_Driver
 	url = https://github.com/STMicroelectronics/stm32u5xx_hal_driver.git
 	branch = main
+[submodule "Drivers/BSP/Components/Common"]
+	path = Drivers/BSP/Components/Common
+	url = https://github.com/STMicroelectronics/stm32-bsp-common.git
+	branch = main
+[submodule "Drivers/BSP/Components/mfxstm32l152"]
+	path = Drivers/BSP/Components/mfxstm32l152
+	url = https://github.com/STMicroelectronics/stm32-mfxstm32l152.git
+	branch = main
+[submodule "Drivers/BSP/STM32U5xx_Nucleo"]
+	path = Drivers/BSP/STM32U5xx_Nucleo
+	url = https://github.com/STMicroelectronics/stm32u5xx-nucleo.git
+	branch = main
