@@ -40,7 +40,7 @@ ST USB Host   | HID_Standalone                     | Shows how to use USB host a
 ## Boards available
 
  * STM32U5
-   * [NUCLEO-U575ZI-Q](https://www.st.com/en/evaluation-tools/nucleo-h755zi-q.html)
+   * [NUCLEO-U575ZI-Q](https://www.st.com/en/evaluation-tools/nucleo-u575zi-q.html)
 
 ## Development Toolchains and Compilers
 
