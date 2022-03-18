@@ -8,12 +8,12 @@ This guide serves as a checklist before contributing to this repository. It main
 
 Please check the following points before posting an issue:
 * Make sure you are using the latest commit (major releases are tagged, but corrections are available as new commits).
-* Make sure your issue is a question/feedback/suggestions **related to** the software provided in this repository. Otherwise, please refer to section [3](CONTRIBUTING.md#3.-support-requests-and-questions) below.
-* Make sure your issue is not already reported/fixed on GitHub or discussed on a previous issue. Please refer to this [dashboard](https://github.com/orgs/STMicroelectronics/projects/2) for the list of issues and pull-requests. Do not forget to browse into the **closed** issues.
+* Make sure your issue is a question/feedback/suggestions **related to** the software provided in this repository. Otherwise, please refer to section [3](CONTRIBUTING.md#3-support-requests-and-questions) below.
+* Make sure your issue is not already reported/fixed on GitHub or discussed on a previous issue. Do not forget to browse into the **closed** issues.
 
 ### 1.2 Posting the issue
 
-When you have checked the previous points, create a new report from the **Issues** tab of this repository. A template is available [here](issues/new/choose) to help you report the issue you are facing or the enhancement you would like to propose.
+When you have checked the previous points, create a new report from the **Issues** tab of this repository. A template is available [here](../../issues/new/choose) to help you report the issue you are facing or the enhancement you would like to propose.
 
 ## 2. Pull Requests
 
