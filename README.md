@@ -10,7 +10,7 @@
 
 **Classic CoreMW** is a collection of middleware stacks and associated applications allowing RTOS management, File System operations and connectivity through USB and Ethernet. It is based on:
 * ST's proprietary stacks: ST USB Device and ST USB Host
-* Third parties' stacks: FreeRTOS, FatFS, and LwIP
+* Third parties' stacks: FreeRTOS
 
 This package is **exclusively** published on GitHub (and is neither available in STM32CubeU5, STM32CubeMX nor STM32CubeIDE available on www.st.com). 
 It contains the integration of the Classic CoreMW stacks with STM32U5 devices, allowing users to get quick access to pre-built projects integrating them.
