@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2021 STMicroelectronics.
+  * Copyright (c) 2024 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -32,7 +32,7 @@
   * @brief This is the list of modules to be used in the HAL driver
   */
 #define HAL_MODULE_ENABLED
-#define HAL_ADC_MODULE_ENABLED 
+#define HAL_ADC_MODULE_ENABLED
 /* #define HAL_COMP_MODULE_ENABLED */
 /* #define HAL_CORDIC_MODULE_ENABLED */
 #define HAL_CORTEX_MODULE_ENABLED

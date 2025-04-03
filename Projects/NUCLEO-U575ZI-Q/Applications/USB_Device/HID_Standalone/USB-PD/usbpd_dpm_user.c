@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2021 STMicroelectronics.
+  * Copyright (c) 2024 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -28,7 +28,7 @@
 #include "stdio.h"
 #endif /* _TRACE */
 #include "usbpd_usb_if.h"
-    
+
 /** @addtogroup STM32_USBPD_APPLICATION
   * @{
   */
@@ -151,26 +151,24 @@ void USBPD_DPM_Notification(uint8_t PortNum, USBPD_NotifyEventValue_TypeDef Even
 {
   switch(EventVal)
   {
-
     /*
      *  USB management
      */
     case USBPD_NOTIFY_USBSTACK_START:
-      {
-        /* start device stack */
-        USBPD_USBIF_DeviceStart(PortNum);
-        break;
-      }
+    {
+      /* start device stack */
+      USBPD_USBIF_DeviceStart(PortNum);
+      break;
+    }
     case USBPD_NOTIFY_USBSTACK_STOP:
-      {
-        /* stop device stack */
-        USBPD_USBIF_DeviceStop(PortNum);
-        break;
-      }
+    {
+      /* stop device stack */
+      USBPD_USBIF_DeviceStop(PortNum);
+      break;
+    }
     /*************************** end USB management *****************************/
-
     default:
-            break;
+      break;
     }
 }
 

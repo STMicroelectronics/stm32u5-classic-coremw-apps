@@ -1,3 +1,4 @@
+/* USER CODE BEGIN Header */
 /**
   ******************************************************************************
   * @file           : USB_Host/HID_Standalone/Core/Inc/main.h
@@ -7,7 +8,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2021 STMicroelectronics.
+  * Copyright (c) 2024 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -16,6 +17,7 @@
   *
   ******************************************************************************
   */
+/* USER CODE END Header */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __MAIN_H
@@ -29,12 +31,16 @@ extern "C" {
 #include "stm32u5xx_hal.h"
 
 /* Private includes ----------------------------------------------------------*/
+/* USER CODE BEGIN Includes */
 #include "usbh_core.h"
 #include "stm32u5xx_nucleo.h"
 
+/* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
+/* USER CODE BEGIN ET */
 
+/* USER CODE END ET */
 
 /* Exported constants --------------------------------------------------------*/
 /* User can use this section to tailor USARTx/UARTx instance used and associated
@@ -56,18 +62,25 @@ extern "C" {
 #define USARTx_RX_GPIO_PORT              GPIOA
 #define USARTx_RX_AF                     GPIO_AF7_USART1
 
+/* USER CODE BEGIN EC */
 extern USBH_HandleTypeDef hUsbHostHS;
+/* USER CODE END EC */
 
 /* Exported macro ------------------------------------------------------------*/
+/* USER CODE BEGIN EM */
 
+/* USER CODE END EM */
 
 /* Exported functions prototypes ---------------------------------------------*/
 void Error_Handler(void);
+/* USER CODE BEGIN EFP */
 
-
+/* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+/* USER CODE BEGIN Private defines */
 
+/* USER CODE END Private defines */
 
 #ifdef __cplusplus
 }

@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2021 STMicroelectronics.
+  * Copyright (c) 2024 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -25,7 +25,7 @@
 
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
-/* User can use this section to tailor USARTx/UARTx instance used and associated 
+/* User can use this section to tailor USARTx/UARTx instance used and associated
    resources */
 /* Definition for USARTx clock resources */
 
@@ -69,7 +69,7 @@
 #define TIMx_CLK_ENABLE                    __HAL_RCC_TIM3_CLK_ENABLE
 #define TIMx_FORCE_RESET()                 __HAL_RCC_USART3_FORCE_RESET()
 #define TIMx_RELEASE_RESET()               __HAL_RCC_USART3_RELEASE_RESET()
- 
+
 /* Definition for TIMx's NVIC */
 #define TIMx_IRQn                          TIM3_IRQn
 #define TIMx_IRQHandler                    TIM3_IRQHandler

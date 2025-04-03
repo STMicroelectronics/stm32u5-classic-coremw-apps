@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2021 STMicroelectronics.
+  * Copyright (c) 2024 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -42,5 +42,4 @@ extern "C" {
 #endif
 
 #endif /* STM32U5XX_NUCLEO_CONF_H */
-
 

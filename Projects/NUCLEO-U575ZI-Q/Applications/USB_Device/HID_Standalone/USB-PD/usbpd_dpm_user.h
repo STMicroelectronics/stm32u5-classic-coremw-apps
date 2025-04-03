@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2021 STMicroelectronics.
+  * Copyright (c) 2024 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -56,9 +56,9 @@
 /** @addtogroup USBPD_USER_EXPORTED_FUNCTIONS_GROUP1
   * @{
   */
-void                USBPD_DPM_UserExecute(void const *argument);
-void                USBPD_DPM_Notification(uint8_t PortNum, USBPD_NotifyEventValue_TypeDef EventVal);
-void                USBPD_DPM_UserCableDetection(uint8_t PortNum, USBPD_CAD_EVENT State);
+void USBPD_DPM_UserExecute(void const *argument);
+void USBPD_DPM_Notification(uint8_t PortNum, USBPD_NotifyEventValue_TypeDef EventVal);
+void USBPD_DPM_UserCableDetection(uint8_t PortNum, USBPD_CAD_EVENT State);
 
 /**
   * @}

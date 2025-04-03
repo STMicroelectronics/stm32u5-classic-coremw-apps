@@ -30,3 +30,7 @@
 	path = Middlewares/ST/STM32_USB_Host_Library
 	url = https://github.com/STMicroelectronics/stm32_mw_usb_host.git
 	branch = master
+[submodule "Middlewares/Third_Party/FatFs"]
+	path = Middlewares/Third_Party/FatFs
+	url = https://github.com/STMicroelectronics/stm32-mw-fatfs.git
+	branch = master

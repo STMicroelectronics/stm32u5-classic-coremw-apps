@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2021 STMicroelectronics.
+  * Copyright (c) 2024 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -61,7 +61,6 @@ static int8_t CDC_Itf_DeInit(void);
 static int8_t CDC_Itf_Control(uint8_t cmd, uint8_t * pbuf, uint16_t length);
 static int8_t CDC_Itf_Receive(uint8_t * pbuf, uint32_t * Len);
 static int8_t CDC_TransmitCplt(uint8_t *pbuf, uint32_t *Len, uint8_t epnum);
-static void Error_Handler(void);
 static void ComPort_Config(void);
 static void TIM_Config(void);
 
@@ -430,13 +429,6 @@ static void TIM_Config(void)
     /* Initialization Error */
     Error_Handler();
   }
-  /* ##-2- Start the TIM Base generation in interrupt mode #################### */
-  /* Start Channel1 */
-  if (HAL_TIM_Base_Start_IT(&TimHandle) != HAL_OK)
-  {
-    /* Starting Error */
-    Error_Handler();
-  }
 }
 
 /**
@@ -448,15 +440,5 @@ void HAL_UART_ErrorCallback(UART_HandleTypeDef * UartHandle)
 {
   /* Transfer error occurred in reception and/or transmission process */
   Error_Handler();
-}
-
-/**
-  * @brief  This function is executed in case of error occurrence.
-  * @param  None
-  * @retval None
-  */
-static void Error_Handler(void)
-{
-  /* Add your own code here */
 }
 

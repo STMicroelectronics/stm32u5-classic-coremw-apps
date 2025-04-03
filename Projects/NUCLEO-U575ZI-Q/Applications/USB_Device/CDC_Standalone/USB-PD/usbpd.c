@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2021 STMicroelectronics.
+  * Copyright (c) 2024 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -18,8 +18,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "usbpd.h"
-
-
+#include "main.h"
 
 /* Private variables ---------------------------------------------------------*/
 
@@ -32,13 +31,12 @@ void MX_USBPD_Init(void)
   /* Initialize the Device Policy Manager */
   if (USBPD_OK != USBPD_DPM_InitCore())
   {
-    while(1);
+    Error_Handler();
   }
-
 
   if (USBPD_OK != USBPD_DPM_InitOS())
   {
-    while(1);
+    Error_Handler();
   }
 }
 

@@ -1,3 +1,4 @@
+/* USER CODE BEGIN Header */
 /**
   ******************************************************************************
   * @file    : USB_Host/HID_Standalone/Core/Inc/stm32u5xx_it.h
@@ -6,7 +7,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2021 STMicroelectronics.
+  * Copyright (c) 2024 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -15,6 +16,7 @@
   *
   ******************************************************************************
   */
+/* USER CODE END Header */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __STM32U5xx_IT_H
@@ -25,16 +27,24 @@
 #endif
 
 /* Private includes ----------------------------------------------------------*/
+/* USER CODE BEGIN Includes */
 
+/* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
+/* USER CODE BEGIN ET */
 
+/* USER CODE END ET */
 
 /* Exported constants --------------------------------------------------------*/
+/* USER CODE BEGIN EC */
 
+/* USER CODE END EC */
 
 /* Exported macro ------------------------------------------------------------*/
+/* USER CODE BEGIN EM */
 
+/* USER CODE END EM */
 
 /* Exported functions prototypes ---------------------------------------------*/
 void NMI_Handler(void);
@@ -47,7 +57,9 @@ void DebugMon_Handler(void);
 void PendSV_Handler(void);
 void SysTick_Handler(void);
 void OTG_FS_IRQHandler(void);
+/* USER CODE BEGIN EFP */
 
+/* USER CODE END EFP */
 
 #ifdef __cplusplus
 }

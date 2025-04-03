@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2021 STMicroelectronics.
+  * Copyright (c) 2024 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -26,7 +26,7 @@ extern "C" {
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32u5xx_hal.h"
-#include "usbd_cdc.h" 
+#include "usbd_cdc.h"
 #include "usbd_cdc_if.h"
 
 /* Private includes ----------------------------------------------------------*/
