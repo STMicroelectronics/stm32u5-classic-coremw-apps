@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2021 STMicroelectronics.
+  * Copyright (c) 2024 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -54,13 +54,13 @@
   * @{
   */
 
-#define USBD_VID     0x483
-#define USBD_LANGID_STRING     1033
-#define USBD_MANUFACTURER_STRING     "STMicroelectronics"
-#define USBD_PID     0x5710
-#define USBD_PRODUCT_STRING     "STM32 Human interface"
+#define USBD_VID                      0x483
+#define USBD_LANGID_STRING            1033
+#define USBD_MANUFACTURER_STRING      "STMicroelectronics"
+#define USBD_PID                      0x5710
+#define USBD_PRODUCT_STRING           "STM32 Human interface"
 #define USBD_CONFIGURATION_STRING     "HID Config"
-#define USBD_INTERFACE_STRING     "HID Interface"
+#define USBD_INTERFACE_STRING         "HID Interface"
 
 
 
@@ -171,10 +171,10 @@ __ALIGN_BEGIN uint8_t USBD_HID_DeviceDesc[USB_LEN_DEV_DESC] __ALIGN_END =
 /** USB lang identifier descriptor. */
 __ALIGN_BEGIN uint8_t USBD_LangIDDesc[USB_LEN_LANGID_STR_DESC] __ALIGN_END =
 {
-     USB_LEN_LANGID_STR_DESC,
-     USB_DESC_TYPE_STRING,
-     LOBYTE(USBD_LANGID_STRING),
-     HIBYTE(USBD_LANGID_STRING)
+  USB_LEN_LANGID_STR_DESC,
+  USB_DESC_TYPE_STRING,
+  LOBYTE(USBD_LANGID_STRING),
+  HIBYTE(USBD_LANGID_STRING)
 };
 
 #if defined ( __ICCARM__ ) /* IAR Compiler */

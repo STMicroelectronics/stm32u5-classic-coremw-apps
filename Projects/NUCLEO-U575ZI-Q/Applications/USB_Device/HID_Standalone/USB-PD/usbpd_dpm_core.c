@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2021 STMicroelectronics.
+  * Copyright (c) 2024 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -36,7 +36,6 @@ extern uint32_t HAL_GetTick(void);
  /* !FREERTOS */
 
 void USBPD_CAD_Task(void);
-
 void USBPD_TaskUser(void);
 
 /* Private typedef -----------------------------------------------------------*/
@@ -113,7 +112,6 @@ USBPD_StatusTypeDef USBPD_DPM_InitCore(void)
   */
 USBPD_StatusTypeDef USBPD_DPM_InitOS(void)
 {
-
   return USBPD_OK;
 }
 

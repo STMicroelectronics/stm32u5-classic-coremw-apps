@@ -1,3 +1,4 @@
+/* USER CODE BEGIN Header */
 /**
   ******************************************************************************
   * @file    : USB_Host/HID_Standalone/USB_Host/Target/usbh_conf.c
@@ -6,7 +7,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2021 STMicroelectronics.
+  * Copyright (c) 2024 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -15,29 +16,39 @@
   *
   ******************************************************************************
   */
+/* USER CODE END Header */
 
 /* Includes ------------------------------------------------------------------*/
 #include "usbh_core.h"
-
+#include "main.h"
+/* USER CODE BEGIN Includes */
 #include "stm32u5xx_hal.h"
+/* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
 
 /* Private variables ---------------------------------------------------------*/
+/* USER CODE BEGIN PV */
 
+/* USER CODE END PV */
 HCD_HandleTypeDef hhcd_USB_OTG_FS;
-extern void Error_Handler(void);
+/* USER CODE BEGIN 0 */
 
+/* USER CODE END 0 */
 
 /* Private function prototypes -----------------------------------------------*/
+/* USER CODE BEGIN PFP */
 USBH_StatusTypeDef USBH_Get_USB_Status(HAL_StatusTypeDef hal_status);
 
+/* USER CODE END PFP */
 
 /* Private functions ---------------------------------------------------------*/
 
+/* USER CODE BEGIN 1 */
 
+/* USER CODE END 1 */
 
 /*******************************************************************************
                        LL Driver Callbacks (HCD -> USB Host Library)
@@ -46,23 +57,22 @@ USBH_StatusTypeDef USBH_Get_USB_Status(HAL_StatusTypeDef hal_status);
 
 void HAL_HCD_MspInit(HCD_HandleTypeDef* hcdHandle)
 {
-  GPIO_InitTypeDef GPIO_InitStruct = {0};
   if(hcdHandle->Instance==USB_OTG_FS)
   {
-    __HAL_RCC_GPIOA_CLK_ENABLE();
-    /**USB GPIO Configuration
-    PA11     ------> USB_DM
-    PA12     ------> USB_DP
-    */
-    GPIO_InitStruct.Pin = GPIO_PIN_11|GPIO_PIN_12;
-    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-    GPIO_InitStruct.Alternate  = GPIO_AF10_USB;
-    HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
     /* Peripheral clock enable */
     __HAL_RCC_USB_CLK_ENABLE();
+
+    /* Enable VDDUSB */
+    if(__HAL_RCC_PWR_IS_CLK_DISABLED())
+    {
+      __HAL_RCC_PWR_CLK_ENABLE();
+      HAL_PWREx_EnableVddUSB();
+      __HAL_RCC_PWR_CLK_DISABLE();
+    }
+    else
+    {
+      HAL_PWREx_EnableVddUSB();
+    }
 
     /* Set USB FS Interrupt priority */
     HAL_NVIC_SetPriority(OTG_FS_IRQn, 6, 0);
@@ -70,38 +80,24 @@ void HAL_HCD_MspInit(HCD_HandleTypeDef* hcdHandle)
     /* Enable USB FS Interrupt */
     HAL_NVIC_EnableIRQ(OTG_FS_IRQn);
   }
-  /* Enable used GPIOH clocks */
-  __HAL_RCC_GPIOH_CLK_ENABLE();
-
-  /* Enable used GPIOH clocks */
-  GPIO_InitStruct.Pin  = GPIO_PIN_2;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-
-  /* Initialize the IO */
-  HAL_GPIO_Init(GPIOH, &GPIO_InitStruct);
-
-
 }
 
 void HAL_HCD_MspDeInit(HCD_HandleTypeDef* hcdHandle)
 {
   if(hcdHandle->Instance==USB_OTG_FS)
   {
+    /* USER CODE BEGIN USB_MspDeInit 0 */
 
+    /* USER CODE END USB_MspDeInit 0 */
     /* Peripheral clock disable */
-  __HAL_RCC_USB_CLK_DISABLE();
-
-    /**USB GPIO Configuration
-    PA11     ------> USB_DM
-    PA12     ------> USB_DP
-    */
-    HAL_GPIO_DeInit(GPIOA, GPIO_PIN_11|GPIO_PIN_12);
+    __HAL_RCC_USB_CLK_DISABLE();
 
     /* Peripheral interrupt Deinit*/
     HAL_NVIC_DisableIRQ(OTG_FS_IRQn);
 
-    __HAL_RCC_GPIOA_CLK_DISABLE();
+    /* USER CODE BEGIN USB_MspDeInit 1 */
+
+    /* USER CODE END USB_MspDeInit 1 */
   }
 }
 
@@ -181,7 +177,6 @@ void HAL_HCD_PortDisabled_Callback(HCD_HandleTypeDef *hhcd)
 */
 USBH_StatusTypeDef USBH_LL_Init(USBH_HandleTypeDef * phost)
 {
-  HAL_PWREx_EnableVddUSB();
   /* Set the LL Driver parameters */
   hhcd_USB_OTG_FS.Instance = USB_OTG_FS;
   hhcd_USB_OTG_FS.Init.Host_channels = 12;
@@ -192,6 +187,7 @@ USBH_StatusTypeDef USBH_LL_Init(USBH_HandleTypeDef * phost)
   hhcd_USB_OTG_FS.Init.speed = HCD_SPEED_FULL;
   hhcd_USB_OTG_FS.Init.vbus_sensing_enable = DISABLE;
   hhcd_USB_OTG_FS.Init.lpm_enable = DISABLE;
+  hhcd_USB_OTG_FS.Init.dma_enable = DISABLE;
 
   /* Link the driver to the stack */
   hhcd_USB_OTG_FS.pData = phost;
@@ -433,21 +429,25 @@ USBH_URBStateTypeDef USBH_LL_GetURBState(USBH_HandleTypeDef *phost, uint8_t pipe
 USBH_StatusTypeDef USBH_LL_DriverVBUS(USBH_HandleTypeDef *phost, uint8_t state)
 {
 
+  /* USER CODE BEGIN 0 */
+
+  /* USER CODE END 0*/
 
   if (phost->id == HOST_FS)
   {
     if (state == TRUE)
     {
       /* Drive high Charge pump */
-      /* ToDo: Add IOE driver control */
-      HAL_GPIO_WritePin(GPIOH, GPIO_PIN_2, GPIO_PIN_SET);
+      /* USER CODE BEGIN DRIVE_HIGH_CHARGE_FOR_FS */
 
+      /* USER CODE END DRIVE_HIGH_CHARGE_FOR_FS */
     }
     else
     {
-      /* Drive low Charge pump */
-      /* ToDo: Add IOE driver control */
-      HAL_GPIO_WritePin(GPIOH,GPIO_PIN_2, GPIO_PIN_RESET);
+      /* Drive low Charge pump */      
+      /* USER CODE BEGIN DRIVE_LOW_CHARGE_FOR_FS */
+
+      /* USER CODE END DRIVE_LOW_CHARGE_FOR_FS */
     }
   }
   HAL_Delay(200);
@@ -478,7 +478,7 @@ USBH_StatusTypeDef USBH_LL_SetToggle(USBH_HandleTypeDef *phost, uint8_t pipe, ui
 }
 
 /**
-  * @brief  Returns the current toggle of a pipe.
+  * @brief  Return the current toggle of a pipe.
   * @param  phost: Host handle
   * @param  pipe: Pipe index
   * @retval toggle (0/1)

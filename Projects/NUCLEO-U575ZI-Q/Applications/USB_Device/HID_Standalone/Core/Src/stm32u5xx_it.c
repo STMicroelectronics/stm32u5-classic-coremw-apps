@@ -8,7 +8,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2021 STMicroelectronics.
+  * Copyright (c) 2024 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -55,7 +55,6 @@ extern PCD_HandleTypeDef hpcd_USB_OTG_FS;
 void NMI_Handler(void)
 {
 
-
 }
 
 /**
@@ -63,7 +62,6 @@ void NMI_Handler(void)
   */
 void HardFault_Handler(void)
 {
-
   while (1)
   {
   }
@@ -74,7 +72,6 @@ void HardFault_Handler(void)
   */
 void MemManage_Handler(void)
 {
-
   while (1)
   {
   }
@@ -85,7 +82,6 @@ void MemManage_Handler(void)
   */
 void BusFault_Handler(void)
 {
-
   while (1)
   {
   }
@@ -96,7 +92,6 @@ void BusFault_Handler(void)
   */
 void UsageFault_Handler(void)
 {
-
   while (1)
   {
   }
@@ -108,7 +103,6 @@ void UsageFault_Handler(void)
 void SVC_Handler(void)
 {
 
-
 }
 
 /**
@@ -116,7 +110,6 @@ void SVC_Handler(void)
   */
 void DebugMon_Handler(void)
 {
-
 
 }
 
@@ -126,7 +119,6 @@ void DebugMon_Handler(void)
 void PendSV_Handler(void)
 {
 
-
 }
 
 /**
@@ -134,9 +126,7 @@ void PendSV_Handler(void)
   */
 void SysTick_Handler(void)
 {
-
   HAL_IncTick();
-
 }
 
 /******************************************************************************/
@@ -161,9 +151,7 @@ void UCPD1_IRQHandler(void)
 */
 void OTG_FS_IRQHandler(void)
 {
-
-    HAL_PCD_IRQHandler(&hpcd_USB_OTG_FS);
-
+  HAL_PCD_IRQHandler(&hpcd_USB_OTG_FS);
 }
 
 /**

@@ -128,14 +128,14 @@ uint32_t                USBPD_CAD_Process(void);
 void                    USBPD_CAD_PortEnable(uint8_t PortNum, USBPD_CAD_activation State);
 
 /**
-  * @brief  Set the resitor to present a SNK.
+  * @brief  Set the resistor to present a SNK.
   * @param  PortNum Index of current used port
   * @retval None
   */
 void                    USBPD_CAD_AssertRd(uint8_t PortNum);
 
 /**
-  * @brief  Set the resitor to present a SRC.
+  * @brief  Set the resistor to present a SRC.
   * @param  PortNum Index of current used port
   * @retval None
   */
@@ -272,6 +272,12 @@ typedef void (*TRACE_ENTRY_POINT)(TRACE_EVENT type, uint8_t port, uint8_t sop, u
 #ifdef USBPDCORE_VCONN_SUPPORT
 #define PE_TVCONNSOURCETIMEOUT           150u   /*!< tVCONNSourceTimeout: min 100ms to max 200ms               */
 #endif /* USBPDCORE_VCONN_SUPPORT */
+
+
+#define PE_TVCONNZERO                    125u   /*!< tVCONNZero          :max 125ms                            */
+#define PE_TVCONNREAPPLIED                10u   /*!< tVCONNZero          :min 10 max 20ms                      */
+#define PE_TDATARESETFAIL                300u   /*!< tDataResetFail      :min 300ms                            */
+#define PE_TDATARESET                    200u   /*!< tDataReset          :min 200ms 225ms max 250ms            */
 /**
   * @}
   */
@@ -583,7 +589,7 @@ typedef struct
   void (*USBPD_PE_SetDataInfo)(uint8_t PortNum, USBPD_CORE_DataInfoType_TypeDef DataId, uint8_t *Ptr, uint32_t Size);
 
   /**
-    * @brief  Callback used by a SOURCE to evluate the SINK request
+    * @brief  Callback used by a SOURCE to evaluate the SINK request
     * @param  PortNum Port number
     * @param  PtrPowerObject  Pointer on the power data object
     * @retval Returned values are: @ref USBPD_ACCEPT, @ref USBPD_REJECT, @ref USBPD_WAIT, @ref USBPD_GOTOMIN
@@ -662,6 +668,7 @@ typedef struct
     * @retval Returned values are: @ref USBPD_DISABLE or @ref USBPD_ENABLE
     */
   USBPD_FunctionalState(*USBPD_PE_IsPowerReady)(uint8_t PortNum, USBPD_VSAFE_StatusTypeDef Vsafe);
+
 
 } USBPD_PE_Callbacks;
 
@@ -780,7 +787,7 @@ void USBPD_PE_IsCableConnected(uint8_t PortNum, uint8_t IsConnected);
 
 /**
   * @brief  Increment PE Timers tick
-  * @note   This function must be called each elasped ms
+  * @note   This function must be called each ms
   * @param  PortNum Index of current used port
   * @retval None
   */

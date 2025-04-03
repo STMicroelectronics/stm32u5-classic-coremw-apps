@@ -1,3 +1,4 @@
+/* USER CODE BEGIN Header */
 /**
   ******************************************************************************
   * @file    : USB_Host/HID_Standalone/USB_Host/App/usb_host.h
@@ -6,7 +7,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2021 STMicroelectronics.
+  * Copyright (c) 2024 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -15,6 +16,7 @@
   *
   ******************************************************************************
   */
+/* USER CODE END Header */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __USB_HOST__H__
@@ -28,8 +30,10 @@
 #include "stm32u5xx.h"
 #include "stm32u5xx_hal.h"
 
+/* USER CODE BEGIN INCLUDE */
 #include "usbh_hid.h"
 #include "usbh_hid_parser.h"
+/* USER CODE END INCLUDE */
 
 /** @addtogroup USBH_OTG_DRIVER
   * @{
@@ -57,12 +61,14 @@ typedef enum {
   APPLICATION_DISCONNECT
 }ApplicationTypeDef;
 
+/** USER CODE BEGIN1 **/
 typedef enum {
   HID_APP_IDLE = 0,
   HID_APP_WAIT,
   HID_APP_MOUSE,
   HID_APP_KEYBOARD,
 }HID_APP_State;
+/** USER CODE END1 **/
 
 /**/
 /** @defgroup USBH_HOST_Exported_FunctionsPrototype USBH_HOST_Exported_FunctionsPrototype

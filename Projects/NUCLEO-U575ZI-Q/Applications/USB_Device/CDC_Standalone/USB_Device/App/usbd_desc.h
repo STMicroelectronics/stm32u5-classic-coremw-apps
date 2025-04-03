@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2021 STMicroelectronics.
+  * Copyright (c) 2024 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -46,7 +46,7 @@
 #define         DEVICE_ID2          (UID_BASE + 0x4)
 #define         DEVICE_ID3          (UID_BASE + 0x8)
 
-#define  USB_SIZ_STRING_SERIAL       0x1A
+#define  USB_SIZ_STRING_SERIAL       0x1AU
 
 
 

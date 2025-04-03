@@ -1,3 +1,4 @@
+/* USER CODE BEGIN Header */
 /**
   ******************************************************************************
   * @file    : USB_Host/HID_Standalone/USB_Host/App/usb_host.c
@@ -6,7 +7,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2021 STMicroelectronics.
+  * Copyright (c) 2024 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -15,23 +16,29 @@
   *
   ******************************************************************************
   */
+/* USER CODE END Header */
 
 /* Includes ------------------------------------------------------------------*/
 
 #include "usb_host.h"
 #include "usbh_core.h"
 #include "usbh_hid.h"
+#include "main.h"
 
+/* USER CODE BEGIN Includes */
 
-
+/* USER CODE END Includes */
 /* Private variables ---------------------------------------------------------*/
+/* USER CODE BEGIN PV */
 __IO HID_APP_State hid_app_state;
+/* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
-void USBH_Clock_Config(void);
+/* USER CODE BEGIN PFP */
 extern void HID_MOUSE_App(USBH_HandleTypeDef *phost);
 extern void HID_KEYBRD_App(USBH_HandleTypeDef *phost);
-extern void Error_Handler(void);
+void USBH_Clock_Config(void);
+/* USER CODE END PFP */
 
 /* USB Host core handle declaration */
 USBH_HandleTypeDef hUsbHost;
@@ -40,6 +47,7 @@ ApplicationTypeDef Appli_state = APPLICATION_IDLE;
 /*
  * -- Insert your variables declaration here --
  */
+/* USER CODE BEGIN 0 */
 /**
   * @brief USB Clock Configuration
   * @retval None
@@ -47,21 +55,26 @@ ApplicationTypeDef Appli_state = APPLICATION_IDLE;
 void USBH_Clock_Config(void)
 {
   RCC_PeriphCLKInitTypeDef PeriphClkInitStruct = {0};
-  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
 
   __HAL_RCC_PWR_CLK_ENABLE();
-  /* Enable HSI48 */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI48;
-  RCC_OscInitStruct.HSI48State = RCC_HSI48_ON;
-  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
+
   PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_CLK48;
-  PeriphClkInitStruct.Clk48ClockSelection  = RCC_CLK48CLKSOURCE_HSI48;
-  HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct);
-  if (HAL_RCC_OscConfig(&RCC_OscInitStruct)!= HAL_OK)
+  PeriphClkInitStruct.IclkClockSelection = RCC_CLK48CLKSOURCE_PLL2;
+  PeriphClkInitStruct.PLL2.PLL2Source = RCC_PLLSOURCE_HSE;
+  PeriphClkInitStruct.PLL2.PLL2M = 1;
+  PeriphClkInitStruct.PLL2.PLL2N = 18;
+  PeriphClkInitStruct.PLL2.PLL2P = 2;
+  PeriphClkInitStruct.PLL2.PLL2Q = 3;
+  PeriphClkInitStruct.PLL2.PLL2R = 2;
+  PeriphClkInitStruct.PLL2.PLL2RGE = RCC_PLLVCIRANGE_1;
+  PeriphClkInitStruct.PLL2.PLL2FRACN = 0.0;
+  PeriphClkInitStruct.PLL2.PLL2ClockOut = RCC_PLL2_DIVQ;
+  if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
   {
     Error_Handler();
   }
 }
+/* USER CODE END 0 */
 
 /*
  * user callback declaration
@@ -71,6 +84,7 @@ static void USBH_UserProcess(USBH_HandleTypeDef *phost, uint8_t id);
 /*
  * -- Insert your external function declaration here --
  */
+/* USER CODE BEGIN 1 */
 
 /**
 * @brief  Manages HID Application Process.
@@ -125,6 +139,7 @@ void USBH_HID_AppProcess(void)
     hid_app_state = HID_APP_WAIT;
   }
 }
+/* USER CODE END 1 */
 
 /**
   * Init USB host library, add supported class and start the library
@@ -175,6 +190,7 @@ void MX_USB_HOST_Process(void)
  */
 static void USBH_UserProcess  (USBH_HandleTypeDef *phost, uint8_t id)
 {
+  /* USER CODE BEGIN CALL_BACK_1 */
   switch(id)
   {
   case HOST_USER_CONNECTION:
@@ -191,6 +207,7 @@ static void USBH_UserProcess  (USBH_HandleTypeDef *phost, uint8_t id)
   default:
   break;
   }
+  /* USER CODE END CALL_BACK_1 */
 }
 
 /**
