@@ -34,7 +34,6 @@ PCD_HandleTypeDef hpcd_USB_OTG_FS;
 /* Exported function prototypes ----------------------------------------------*/
 
 /* Private function prototypes -----------------------------------------------*/
-extern void USBD_Clock_Config(void);
 
 /* Private functions ---------------------------------------------------------*/
 static USBD_StatusTypeDef USBD_Get_USB_Status(HAL_StatusTypeDef hal_status);

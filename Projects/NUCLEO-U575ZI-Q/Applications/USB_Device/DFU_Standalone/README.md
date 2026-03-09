@@ -37,7 +37,7 @@ Once the NUCLEO-U575ZI-Q USB device successfully completed the enumeration phase
 
 #### <b>Error behaviors</b>
 
-  - LED_RED is toggling to indicate a critical error has occured.
+  - LED_RED is toggling to indicate a critical error has occurred.
   - Host PC shows that USB device does not appear as DFU device.
 
 #### <b>Assumptions if any</b>

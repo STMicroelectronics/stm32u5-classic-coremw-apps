@@ -39,7 +39,7 @@
 
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
-void USBD_Clock_Config(void);
+
 /* USER CODE END PFP */
 
 /* USB Device Core handle declaration. */
@@ -82,12 +82,3 @@ void MX_USB_Device_Init(void)
   /* USER CODE END USB_Device_Init_PostTreatment */
 }
 
-/**
-  * @}
-  */
-
-/**
-  * @}
-  */
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

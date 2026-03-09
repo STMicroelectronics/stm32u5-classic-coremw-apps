@@ -51,7 +51,7 @@ open two hyperterminals (USB com port and UART com port(USB STLink VCP)) to send
 
 #### <b>Error behaviors</b>
 
-  - LED_RED is toggling to indicate a critical error has occured.
+  - LED_RED is toggling to indicate a critical error has occurred.
 
 #### <b>Assumptions if any</b>
 

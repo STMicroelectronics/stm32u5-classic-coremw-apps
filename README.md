@@ -2,7 +2,7 @@
 
 ![latest tag](https://img.shields.io/github/v/tag/STMicroelectronics/stm32u5-classic-coremw-apps.svg?color=brightgreen)
 
-![freertos](https://img.shields.io/badge/freertos-v10.6.2-blue.svg) ![fatfs](https://img.shields.io/badge/fatfs-v0.15-blue.svg) ![usb_device](https://img.shields.io/badge/usb_device-v2.11.3-blue.svg) ![usb_host](https://img.shields.io/badge/usb_host-v3.5.3-blue.svg)
+![fatfs](https://img.shields.io/badge/fatfs-v0.15-blue.svg) ![usb_device](https://img.shields.io/badge/usb_device-v2.11.5-blue.svg) ![usb_host](https://img.shields.io/badge/usb_host-v3.5.4-blue.svg)
 
 ## Description
 
@@ -10,7 +10,7 @@
 
 **Classic CoreMW** is a collection of middleware stacks and associated applications allowing RTOS management, File System operations and connectivity through USB and Ethernet. It is based on:
 * ST's proprietary stacks: ST USB Device and ST USB Host
-* Third parties' stacks: FreeRTOS and FatFS
+* Third parties' stacks: FatFS
 
 This package is **exclusively** published on GitHub (and is neither available in STM32CubeU5, STM32CubeMX nor STM32CubeIDE available on www.st.com).
 It contains the integration of the Classic CoreMW stacks with STM32U5 devices, allowing users to get quick access to pre-built projects integrating them.
@@ -49,7 +49,7 @@ ST USB Host   | MSC_Standalone                     | Shows how to use USB host a
    * This patch supports STM32U575/585 devices
  * RealView Microcontroller Development Kit (MDK-ARM) toolchain **V5.39** + ST-LINK, patch available [here](https://github.com/STMicroelectronics/STM32CubeU5/tree/main/Utilities/PC_Software/IDEs_Patches/MDK-ARM):
    * This patch supports STM32U575/585 devices
- * STM32CubeIDE **v1.17.0**
+ * STM32CubeIDE **v2.1.0**
 
 ## Dependencies
 
@@ -57,16 +57,15 @@ This package has been developed and tested using the list of components detailed
 
 Name                       |   Version
 ---------------------------|---------------
-Cortex-M CMSIS             |   V5.9.0
-STM32U5xx CMSIS            |   V1.4.1
-STM32U5xx HAL              |   V1.6.1
-BSP STM32U5xx NUCLEO       |   V1.2.2
+Cortex-M CMSIS             |   v5.9.0_fix_620_dsp_v1.10.0_nn_v3.1.0_no_doc
+STM32U5xx CMSIS            |   V1.4.2
+STM32U5xx HAL              |   V1.6.2
+BSP STM32U5xx NUCLEO       |   V1.2.3
 BSP Common                 |   V7.3.0
 BSP mfxstm32l152           |   V4.0.1
-FreeRTOS                   |   V10.6.2
 FatFs                      |   R0.15
-STM32 USB Device Library   |   V2.11.3
-STM32 USB Host Library     |   V3.5.3
+STM32 USB Device Library   |   V2.11.5
+STM32 USB Host Library     |   V3.5.4
 
 ## How to use
 

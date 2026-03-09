@@ -32,7 +32,7 @@ If all operations were successful, a message will be displayed on the HyperTermi
 #### <b>Error behaviors</b>
 
   - Errors are detected (such as unsupported device, enumeration fail, file operations fail) and the corresponding message is displayed on the HyperTerminal.
-  - LED_RED is toggling to indicate a critical error has occured.
+  - LED_RED is toggling to indicate a critical error has occurred.
 
 #### <b>Assumptions if any</b>
 

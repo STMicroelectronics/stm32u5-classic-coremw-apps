@@ -136,8 +136,8 @@ typedef struct
   */
 
 /* Private define ------------------------------------------------------------*/
-#define CAD_TPDDEBOUCE_THRESHOLD         12u          /**< tPDDebounce threshold between 10 to 20ms           */
-#define CAD_TCCDEBOUCE_THRESHOLD         120u         /**< tCCDebounce threshold between 100 to 200ms         */
+#define CAD_TPDDEBOUNCE_THRESHOLD        12u          /**< tPDDebounce threshold between 10 to 20ms           */
+#define CAD_TCCDEBOUNCE_THRESHOLD        120u         /**< tCCDebounce threshold between 100 to 200ms         */
 #define CAD_TSRCDISCONNECT_THRESHOLD     2u           /**< tSRCDisconnect detach threshold between 0 to 20ms  */
 #define CAD_INFINITE_TIME                0xFFFFFFFFu  /**< infinite time to wait a new interrupt event        */
 #define CAD_TERROR_RECOVERY_TIME         26u          /**< tErrorRecovery min 25ms                            */
@@ -517,8 +517,8 @@ uint32_t CAD_StateMachine_SNK(uint8_t PortNum, USBPD_CAD_EVENT *pEvent, CCxPin_T
       {
         case LL_UCPD_SRC_CC1_VRA | LL_UCPD_SRC_CC2_VRA :      /* Audio accessory */
         {
-          /* Check if the device is still connected after the debouce timing */
-          if (HAL_GetTick() - _handle->CAD_tDebounce_start > CAD_TCCDEBOUCE_THRESHOLD)
+          /* Check if the device is still connected after the debounce timing */
+          if (HAL_GetTick() - _handle->CAD_tDebounce_start > CAD_TCCDEBOUNCE_THRESHOLD)
           {
             _handle->cstate = USBPD_CAD_STATE_AUDIO_ACCESSORY;
             *pEvent = USBPD_CAD_EVENT_ACCESSORY;
@@ -529,7 +529,7 @@ uint32_t CAD_StateMachine_SNK(uint8_t PortNum, USBPD_CAD_EVENT *pEvent, CCxPin_T
         case  LL_UCPD_SRC_CC1_VRD | LL_UCPD_SRC_CC2_VRA:   /* VPD CC1 */
         case  LL_UCPD_SRC_CC1_VRA | LL_UCPD_SRC_CC2_VRD:   /* VPD CC2 */
         {
-          if (HAL_GetTick() - _handle->CAD_tDebounce_start > CAD_TCCDEBOUCE_THRESHOLD)
+          if (HAL_GetTick() - _handle->CAD_tDebounce_start > CAD_TCCDEBOUNCE_THRESHOLD)
           {
             _handle->cstate = USBPD_CAD_STATE_POWERED_ACCESSORY;
             *pEvent = USPPD_CAD_EVENT_VPD;
@@ -551,7 +551,7 @@ uint32_t CAD_StateMachine_SNK(uint8_t PortNum, USBPD_CAD_EVENT *pEvent, CCxPin_T
 #endif /* USBPDCORE_VPD */
         default :
         {
-          if ((HAL_GetTick() - _handle->CAD_tDebounce_start) > CAD_TCCDEBOUCE_THRESHOLD)
+          if ((HAL_GetTick() - _handle->CAD_tDebounce_start) > CAD_TCCDEBOUNCE_THRESHOLD)
           {
             /* Get the time of this event */
             _handle->CAD_tToggle_start = HAL_GetTick();
@@ -566,7 +566,7 @@ uint32_t CAD_StateMachine_SNK(uint8_t PortNum, USBPD_CAD_EVENT *pEvent, CCxPin_T
 
     case USBPD_CAD_STATE_AUDIO_ACCESSORY:
     {
-      /* Check if the device is still connected after the debouce timing */
+      /* Check if the device is still connected after the debounce timing */
       if ((LL_UCPD_SRC_CC1_VRA != (Ports[PortNum].husbpd->SR & UCPD_SR_TYPEC_VSTATE_CC1))
           && (LL_UCPD_SRC_CC2_VRA != (Ports[PortNum].husbpd->SR & UCPD_SR_TYPEC_VSTATE_CC2)))
       {
@@ -574,11 +574,11 @@ uint32_t CAD_StateMachine_SNK(uint8_t PortNum, USBPD_CAD_EVENT *pEvent, CCxPin_T
         {
           _handle->CAD_tDebounce_start = HAL_GetTick();
           _handle->CAD_tDebounce_flag = USBPD_TRUE;
-          _timing = CAD_TCCDEBOUCE_THRESHOLD + 49U;
+          _timing = CAD_TCCDEBOUNCE_THRESHOLD + 49U;
         }
         else
         {
-          if ((HAL_GetTick() - _handle->CAD_tDebounce_start) > (CAD_TCCDEBOUCE_THRESHOLD + 50U))
+          if ((HAL_GetTick() - _handle->CAD_tDebounce_start) > (CAD_TCCDEBOUNCE_THRESHOLD + 50U))
           {
             _handle->CAD_tToggle_start = HAL_GetTick();
             _handle->CAD_tDebounce_flag = USBPD_FALSE;
@@ -1268,9 +1268,25 @@ void CAD_Check_HW_SRC(uint8_t PortNum)
   | 1: Sink   |                   |             |xx vRa|vRdUSB| vRd1.5 |vRd3.0|
   -----------------------------------------------------------------------------
   */
+#if defined(_LOW_POWER) || defined(USBPDM1_VCC_FEATURE_ENABLED)
+  /* Enable type C state machine */
+  CLEAR_BIT(Ports[PortNum].husbpd->CR, UCPD_CR_CC1TCDIS | UCPD_CR_CC2TCDIS);
 
+  for (int32_t index = 0; index < CAD_DELAY_READ_CC_STATUS; index++)
+  {
+    __DSB();
+  };
+
+  /* Read the CC line */
   CC1_value = (Ports[PortNum].husbpd->SR & UCPD_SR_TYPEC_VSTATE_CC1) >> UCPD_SR_TYPEC_VSTATE_CC1_Pos;
   CC2_value = (Ports[PortNum].husbpd->SR & UCPD_SR_TYPEC_VSTATE_CC2) >> UCPD_SR_TYPEC_VSTATE_CC2_Pos;
+
+  /* Disable the C state machine */
+  SET_BIT(Ports[PortNum].husbpd->CR, UCPD_CR_CC1TCDIS | UCPD_CR_CC2TCDIS);
+#else
+  CC1_value = (Ports[PortNum].husbpd->SR & UCPD_SR_TYPEC_VSTATE_CC1) >> UCPD_SR_TYPEC_VSTATE_CC1_Pos;
+  CC2_value = (Ports[PortNum].husbpd->SR & UCPD_SR_TYPEC_VSTATE_CC2) >> UCPD_SR_TYPEC_VSTATE_CC2_Pos;
+#endif /* _LOW_POWER || USBPDM1_VCC_FEATURE_ENABLED */
 
 #if !defined(_RTOS)
   /* Workaround linked to issue with Ellisys test TD.PC.E5
@@ -1396,7 +1412,7 @@ static uint32_t ManageStateDetached_SRC(uint8_t PortNum)
   /* Change the status on the basis of the HW event given by CAD_Check_HW() */
   if (_handle->CurrentHWcondition == HW_Detachment)
   {
-#ifdef _LOW_POWER
+#if defined(_LOW_POWER)
     /* Value returned for a SRC */
     _timing = CAD_DETACH_POLLING;
 #else
@@ -1487,7 +1503,7 @@ static uint32_t ManageStateDetached_DRP(uint8_t PortNum)
 static uint32_t ManageStateAttachedWait_SRC(uint8_t PortNum, USBPD_CAD_EVENT *pEvent, CCxPin_TypeDef *pCCXX)
 {
   CAD_HW_HandleTypeDef *_handle = &CAD_HW_Handles[PortNum];
-  uint32_t _timing = 2;
+  uint32_t _timing = CAD_DEFAULT_TIME;
 
   /* Evaluate elapsed time in Attach_Wait state */
   uint32_t CAD_tDebounce = HAL_GetTick() - _handle->CAD_tDebounce_start;
@@ -1499,11 +1515,11 @@ static uint32_t ManageStateAttachedWait_SRC(uint8_t PortNum, USBPD_CAD_EVENT *pE
     {
       /* Reset the timing because VBUS threshold not yet reach */
       _handle->CAD_tDebounce_start = HAL_GetTick();
-      return CAD_TCCDEBOUCE_THRESHOLD;
+      return CAD_TCCDEBOUNCE_THRESHOLD;
     }
 
     /* Check tCCDebounce */
-    if (CAD_tDebounce > CAD_TCCDEBOUCE_THRESHOLD)
+    if (CAD_tDebounce > CAD_TCCDEBOUNCE_THRESHOLD)
     {
       switch (_handle->CurrentHWcondition)
       {
@@ -1547,7 +1563,7 @@ static uint32_t ManageStateAttachedWait_SRC(uint8_t PortNum, USBPD_CAD_EVENT *pE
           break;
       } /* End of switch */
       *pCCXX = _handle->cc;
-      _timing = 2;
+      _timing = CAD_DEFAULT_TIME;
     }
     /* Reset the flag for CAD_tDebounce */
     _handle->CAD_tDebounce_flag = USBPD_FALSE;
@@ -1596,7 +1612,7 @@ static uint32_t ManageStateEMC(uint8_t PortNum, USBPD_CAD_EVENT *pEvent, CCxPin_
       _handle->cstate = USBPD_CAD_STATE_ATTACHED_WAIT;
       _handle->CAD_tDebounce_start = HAL_GetTick() - 5u;  /* This is only to check cable presence */
       BSP_USBPD_PWR_VBUSInit(PortNum);
-      _timing = 2;
+      _timing = CAD_DEFAULT_TIME;
       break;
     case HW_PwrCable_NoSink_Attachment:
     default :
@@ -1611,7 +1627,7 @@ static uint32_t ManageStateEMC(uint8_t PortNum, USBPD_CAD_EVENT *pEvent, CCxPin_
         _timing = 0;
       }
 #else
-      _timing = 2;
+      _timing = CAD_DEFAULT_TIME;
 #endif /* _DRP */
       break;
   }
@@ -1674,6 +1690,15 @@ static uint32_t ManageStateAttachedWait_DRP(uint8_t PortNum, USBPD_CAD_EVENT *pE
   */
 static uint32_t ManageStateAttached_SRC(uint8_t PortNum, USBPD_CAD_EVENT *pEvent, CCxPin_TypeDef *pCCXX)
 {
+#if defined(_LOW_POWER) || defined(USBPDM1_VCC_FEATURE_ENABLED)
+  /* Enable type C state machine */
+  CLEAR_BIT(Ports[PortNum].husbpd->CR, UCPD_CR_CC1TCDIS | UCPD_CR_CC2TCDIS);
+
+  for (int32_t index = 0; index < CAD_DELAY_READ_CC_STATUS; index++)
+  {
+    __DSB();
+  };
+#endif /* _LOW_POWER || USBPDM1_VCC_FEATURE_ENABLED */
   CAD_HW_HandleTypeDef *_handle = &CAD_HW_Handles[PortNum];
   uint32_t _timing = CAD_DEFAULT_TIME;
 
@@ -1717,7 +1742,11 @@ static uint32_t ManageStateAttached_SRC(uint8_t PortNum, USBPD_CAD_EVENT *pEvent
   {
     /* Reset tPDDebounce flag*/
     _handle->CAD_tDebounce_flag   = USBPD_FALSE;
+#if  defined(_LOW_POWER)
+    _timing = CAD_VBUS_POLLING_TIME;
+#else
     _timing = CAD_INFINITE_TIME;
+#endif /* _LOW_POWER */
   }
 
   return _timing;
@@ -1741,7 +1770,7 @@ static uint32_t ManageStateAttachedWait_SNK(uint8_t PortNum, USBPD_CAD_EVENT *pE
   CAD_Check_HW_SNK(PortNum);
   if (_handle->CurrentHWcondition == HW_Attachment)
   {
-    if (CAD_tDebounce > CAD_TCCDEBOUCE_THRESHOLD)
+    if (CAD_tDebounce > CAD_TCCDEBOUNCE_THRESHOLD)
     {
       if (USBPD_TRUE == USBPD_PWR_IF_GetVBUSStatus(PortNum, USBPD_PWR_VSAFE5V)) /* Check if Vbus is on */
       {
@@ -1761,12 +1790,12 @@ static uint32_t ManageStateAttachedWait_SNK(uint8_t PortNum, USBPD_CAD_EVENT *pE
     {
       _handle->CAD_tDebounce_start = HAL_GetTick();
       _handle->CAD_tDebounce_flag = USBPD_TRUE;
-      _timing = CAD_TPDDEBOUCE_THRESHOLD;
+      _timing = CAD_TPDDEBOUNCE_THRESHOLD;
     }
     else /* CAD_tDebounce already running */
     {
       /* Evaluate CAD_tDebounce */
-      if ((HAL_GetTick() - _handle->CAD_tDebounce_start > CAD_TPDDEBOUCE_THRESHOLD))
+      if ((HAL_GetTick() - _handle->CAD_tDebounce_start > CAD_TPDDEBOUNCE_THRESHOLD))
       {
         _handle->CAD_tDebounce_flag = USBPD_FALSE;
         _handle->cstate             = USBPD_CAD_STATE_DETACHED;

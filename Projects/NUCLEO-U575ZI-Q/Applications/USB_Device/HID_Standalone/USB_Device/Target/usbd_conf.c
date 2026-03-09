@@ -37,7 +37,6 @@ PCD_HandleTypeDef hpcd_USB_OTG_FS;
 /* Exported function prototypes ----------------------------------------------*/
 
 /* Private function prototypes -----------------------------------------------*/
-extern void USBD_Clock_Config(void);
 void SystemClockConfig_Resume(void);
 
 /* Private functions ---------------------------------------------------------*/
@@ -654,7 +653,6 @@ void USBD_static_free(void *p)
  void SystemClockConfig_Resume(void)
 {
   SystemClock_Config();
-  USBD_Clock_Config();
 }
 
 /**
